@@ -5,7 +5,8 @@ const {
   eventListDelete,
   eventListUpdate,
   eventDetail,
-  eventSeats
+  eventSeats,
+  searchEvent
 } = require("./controllers");
 const router = express.Router();
 
@@ -16,6 +17,8 @@ router.delete("/:eventId", eventListDelete);
 router.put("/:eventId", eventListUpdate);
 router.get("/:eventId/detail", eventDetail);
 router.get("/full", eventSeats);
+router.get("/search", searchEvent);
+
 
 
 module.exports = router;

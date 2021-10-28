@@ -67,11 +67,22 @@ exports.eventDetail = async (req, res) => {
 };
 
 exports.eventSeats = async (req, res) => {
-
   try {
-    const boodkedEvents = await Event.find({
-      $expr: { $eq: ["$bookedSeats", "$numOfSeats"] },
-    },req.body);
+    const boodkedEvents = await Event.find(
+      {
+        $expr: { $eq: ["$bookedSeats", "$numOfSeats"] },
+      },
+      req.body
+    );
+    return res.status(200).json(boodkedEvents);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+exports.searchEvent = async (req, res) => {
+  try {
+    const boodkedEvents = await Event.find({name: {$regex: req.body.query,  $options: "i"}});
     return res.status(200).json(boodkedEvents);
   } catch (error) {
     return res.status(500).json({ message: error.message });
