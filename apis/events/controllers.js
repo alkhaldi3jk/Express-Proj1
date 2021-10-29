@@ -82,8 +82,35 @@ exports.eventSeats = async (req, res) => {
 
 exports.searchEvent = async (req, res) => {
   try {
-    const boodkedEvents = await Event.find({name: {$regex: req.body.query,  $options: "i"}});
-    return res.status(200).json(boodkedEvents);
+    const searchBar = await Event.find({
+      name: { $regex: req.body.organizer, $options: "i" },
+    });
+    return res.status(201).json(searchBar);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// exports.deleteMulti = async (req, res) => {
+//   try {
+//     Event.deleteMany({ "name": req.body });
+//   } catch (e) {
+//     print(e);
+//   }
+// };
+
+//
+exports.deleteMulti = async (req, res) => {
+  try {
+    const event = await Event.find(req.body);
+    await Event.deleteMany({ "$endDate": req.params.endDate });
+    // await Event.filter((eventId) => event.id !== eventId);
+    if (event) {
+      //   //   await event.remove();
+      return res.status(204).end();
+      // } else {
+      //   return res.status(404).json({ message: "not found" });
+    }
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

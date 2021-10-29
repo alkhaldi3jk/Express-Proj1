@@ -9,10 +9,11 @@ const EventSchema = mongoose.Schema(
     name: { type: String },
     image: { type: String },
     email: { type: String },
-    startDate: { type: Date },
+    startDate: { type: Number },
     endDate: { type: Number },
     bookedSeats: { type: Number, required: true },
     numOfSeats: { type: Number, required: true },
+    delete: {type:String}
   },
   {
     timestamps: true,
